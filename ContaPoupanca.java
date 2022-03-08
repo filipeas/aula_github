@@ -24,6 +24,6 @@ public class ContaPoupanca extends Conta {
 
     @Override
     public double getCaixa() {
-        return (this.getCaixa() * this.getRendimento()) + this.getCaixa();
+        return (super.getCaixa() * this.getRendimento()) + super.getCaixa();
     }
 }
