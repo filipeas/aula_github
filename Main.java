@@ -146,7 +146,14 @@ public class Main {
 							break;
 						case 4:
 							// listar contas poupanças
-							
+							for (int i = 0; i < Clientes.size(); i++) {
+								if (Clientes.get(i).getConta().getClass() == new ContaPoupanca(0, 0).getClass())
+									System.out.println(
+											"Nome: " + Clientes.get(i).getNome() + " - CPF: " + Clientes.get(i).getCpf()
+													+ " - Conta: " + Clientes.get(i).getConta().getConta()
+													+ " - Caixa: "
+													+ Clientes.get(i).getConta().getCaixa());
+							}
 							break;
 					}
 					break;
