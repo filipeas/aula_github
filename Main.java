@@ -69,65 +69,92 @@ public class Main {
 					// chama classe de operações
 					Menu menuOperacoes = new Menu("Menu operacoes",
 							Arrays.asList("Transferir dinheiro para conta corrente",
-									"Transferir dinheiro para conta poupanca"));
-					if (menuOperacoes.getSelection() == 1) {
-						// transferir dinheiro entre duas contas correntes
-						System.out.print("Numero da conta de saida de dinheiro: ");
-						Long conta1 = scan.nextLong();
-						System.out.print("Numero da conta de entrada de dinheiro: ");
-						Long conta2 = scan.nextLong();
-						System.out.print("Valor da transferencia: ");
-						Double valorTransferencia = scan.nextDouble();
+									"Transferir dinheiro para conta poupanca", "Listar contas correntes",
+									"Listar contas poupancas"));
+					switch (menuOperacoes.getSelection()) {
+						case 1:
+							// transferir dinheiro entre duas contas correntes
+							System.out.print("Numero da conta de saida de dinheiro: ");
+							Long cc1 = scan.nextLong();
+							System.out.print("Numero da conta de entrada de dinheiro: ");
+							Long cc2 = scan.nextLong();
+							System.out.print("Valor da transferencia: ");
+							Double valorTransferenciaCorrente = scan.nextDouble();
 
-						if (conta1 == conta2)
-							System.out.println("Voce nao pode transferir dinheiro para sua própria conta.");
-						else {
-							Cliente cliente1 = Cliente.buscaCliente(conta1, Clientes);
-							Cliente cliente2 = Cliente.buscaCliente(conta2, Clientes);
-
-							if (cliente1 == null || cliente2 == null) {
-								System.out.println("Nao foi possivel encontrar um dos clientes");
-								break;
-							}
-
-							if (cliente1.getConta().getClass() != cliente2.getConta().getClass())
-								System.out.println("So eh permitido transferencia entre contas do mesmo tipo");
+							if (cc1 == cc2)
+								System.out.println("Voce nao pode transferir dinheiro para sua própria conta.");
 							else {
-								if (cliente1.getConta().remover(valorTransferencia))
-									cliente2.getConta().adicionar(valorTransferencia);
-								else
-									System.out.println("A conta de saida não tem saldo suficiente!");
+								Cliente cliente1 = Cliente.buscaCliente(cc1, Clientes);
+								Cliente cliente2 = Cliente.buscaCliente(cc2, Clientes);
+
+								if (cliente1 == null || cliente2 == null) {
+									System.out.println("Nao foi possivel encontrar um dos clientes");
+									break;
+								}
+
+								if (cliente1.getConta().getClass() != cliente2.getConta().getClass())
+									System.out.println("So eh permitido transferencia entre contas do mesmo tipo");
+								else {
+									if (cliente1.getConta().remover(valorTransferenciaCorrente))
+										cliente2.getConta().adicionar(valorTransferenciaCorrente);
+									else
+										System.out.println("A conta de saida não tem saldo suficiente!");
+								}
 							}
-						}
-					} else if (menuOperacoes.getSelection() == 2) {
-						// transferir dinheiro entre duas contas poupanca
-						System.out.print("Numero da conta de saida de dinheiro: ");
-						Long conta1 = scan.nextLong();
-						System.out.print("Numero da conta de entrada de dinheiro: ");
-						Long conta2 = scan.nextLong();
-						System.out.print("Valor da transferencia: ");
-						Double valorTransferencia = scan.nextDouble();
+							break;
+						case 2:
+							// transferir dinheiro entre duas contas poupanca
+							System.out.print("Numero da conta de saida de dinheiro: ");
+							Long cp1 = scan.nextLong();
+							System.out.print("Numero da conta de entrada de dinheiro: ");
+							Long cp2 = scan.nextLong();
+							System.out.print("Valor da transferencia: ");
+							Double valorTransferenciaPoupanca = scan.nextDouble();
 
-						if (conta1 == conta2)
-							System.out.println("Voce nao pode transferir dinheiro para sua própria conta.");
-						else {
-							Cliente cliente1 = Cliente.buscaCliente(conta1, Clientes);
-							Cliente cliente2 = Cliente.buscaCliente(conta2, Clientes);
-
-							if (cliente1 == null || cliente2 == null) {
-								System.out.println("Nao foi possivel encontrar um dos clientes");
-								break;
-							}
-
-							if (cliente1.getConta().getClass() != cliente2.getConta().getClass())
-								System.out.println("So eh permitido transferencia entre contas do mesmo tipo");
+							if (cp1 == cp2)
+								System.out.println("Voce nao pode transferir dinheiro para sua própria conta.");
 							else {
-								if (cliente1.getConta().remover(valorTransferencia))
-									cliente2.getConta().adicionar(valorTransferencia);
-								else
-									System.out.println("A conta de saida não tem saldo suficiente!");
+								Cliente cliente1 = Cliente.buscaCliente(cp1, Clientes);
+								Cliente cliente2 = Cliente.buscaCliente(cp2, Clientes);
+
+								if (cliente1 == null || cliente2 == null) {
+									System.out.println("Nao foi possivel encontrar um dos clientes");
+									break;
+								}
+
+								if (cliente1.getConta().getClass() != cliente2.getConta().getClass())
+									System.out.println("So eh permitido transferencia entre contas do mesmo tipo");
+								else {
+									if (cliente1.getConta().remover(valorTransferenciaPoupanca))
+										cliente2.getConta().adicionar(valorTransferenciaPoupanca);
+									else
+										System.out.println("A conta de saida não tem saldo suficiente!");
+								}
 							}
-						}
+							break;
+						case 3:
+							System.out.println("Contas Correntes: ");
+							// listar contas correntes
+							for (int i = 0; i < Clientes.size(); i++) {
+								if (Clientes.get(i).getConta().getClass() == new ContaCorrente(0, 0).getClass())
+									System.out.println(
+											"Nome: " + Clientes.get(i).getNome() + " - CPF: " + Clientes.get(i).getCpf()
+													+ " - Conta: " + Clientes.get(i).getConta().getConta()
+													+ " - Caixa: "
+													+ Clientes.get(i).getConta().getCaixa());
+							}
+							break;
+						case 4:
+							// listar contas poupanças
+							for (int i = 0; i < Clientes.size(); i++) {
+								if (Clientes.get(i).getConta().getClass() == new ContaPoupanca(0, 0).getClass())
+									System.out.println(
+											"Nome: " + Clientes.get(i).getNome() + " - CPF: " + Clientes.get(i).getCpf()
+													+ " - Conta: " + Clientes.get(i).getConta().getConta()
+													+ " - Caixa: "
+													+ Clientes.get(i).getConta().getCaixa());
+							}
+							break;
 					}
 					break;
 				case 4:
