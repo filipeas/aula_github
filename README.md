@@ -5,4 +5,4 @@ Exemplo a ser trabalhado na aula sobre git e GitHub
 
 javac *.java
 
-java Main 
+java Main

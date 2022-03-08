@@ -34,4 +34,12 @@ public class Cliente {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public static Cliente buscaCliente(long conta, ArrayList<Cliente> Clientes) {
+		for (Cliente cliente : Clientes) {
+			if (cliente.getConta().getConta() == conta)
+				return cliente;
+		}
+		return null;
+	}
 }

@@ -24,4 +24,15 @@ abstract class Conta {
     public void setCaixa(double caixa) {
         this.caixa = caixa;
     }
+
+    public boolean remover(double valor) {
+        if (this.caixa < valor)
+            return false;
+        this.setCaixa(this.caixa - valor);
+        return true;
+    }
+
+    public void adicionar(double valor) {
+        this.setCaixa(this.caixa + valor);
+    }
 }
